@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outil CAP · Entretien Feed-back</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --gold: #C49A2E;
+    --gold-light: #E8C96A;
+    --cream: #F9F6EF;
+    --white: #FFFFFF;
+    --grey: #6B7280;
+    --grey-light: #F3F4F6;
+    --c-color: #1B4332;
+    --a-color: #1e3a5f;
+    --p-color: #4A1942;
+    --border: #E5DDD0;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–cream);
+color: var(–navy);
+}
+
+/* ─── PRINT ─── */
+@media print {
+.page { page-break-after: always; }
+.no-print { display: none; }
+body { background: white; }
+.page { box-shadow: none; margin: 0; border-radius: 0; }
+}
+
+/* ─── NAV ─── */
+.nav {
+background: var(–navy);
+display: flex;
+gap: 0;
+justify-content: center;
+padding: 0;
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.nav button {
+background: none;
+border: none;
+color: rgba(255,255,255,0.55);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+font-weight: 500;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+padding: 14px 28px;
+cursor: pointer;
+border-bottom: 3px solid transparent;
+transition: all .25s;
+}
+.nav button.active, .nav button:hover {
+color: var(–gold-light);
+border-bottom-color: var(–gold);
+}
+
+/* ─── PAGE WRAPPER ─── */
+.page {
+display: none;
+max-width: 860px;
+margin: 40px auto;
+padding: 20px;
+}
+.page.active { display: block; }
+
+/* ─── CARD ─── */
+.card {
+background: var(–white);
+border-radius: 12px;
+padding: 44px 48px;
+box-shadow: 0 2px 20px rgba(27,42,74,0.07);
+margin-bottom: 28px;
+}
+
+/* ─── HEADER ─── */
+.doc-header {
+text-align: center;
+margin-bottom: 40px;
+}
+.badge {
+display: inline-block;
+background: var(–navy);
+color: var(–gold-light);
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+padding: 6px 16px;
+border-radius: 20px;
+margin-bottom: 18px;
+}
+.doc-header h1 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 42px;
+font-weight: 700;
+color: var(–navy);
+line-height: 1.1;
+margin-bottom: 8px;
+}
+.doc-header h1 span { color: var(–gold); }
+.doc-header .subtitle {
+font-size: 15px;
+color: var(–grey);
+font-weight: 300;
+}
+.gold-line {
+width: 60px;
+height: 3px;
+background: var(–gold);
+margin: 20px auto 0;
+border-radius: 2px;
+}
+
+/* ─── SECTION TITLE ─── */
+.section-label {
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 10px;
+}
+h2 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 26px;
+font-weight: 600;
+color: var(–navy);
+margin-bottom: 16px;
+line-height: 1.2;
+}
+h3 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 10px;
+}
+p {
+font-size: 14.5px;
+line-height: 1.75;
+color: #374151;
+margin-bottom: 12px;
+}
+
+/* ─── CAP BLOCKS ─── */
+.cap-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 18px;
+margin: 28px 0;
+}
+.cap-block {
+border-radius: 10px;
+padding: 24px 20px;
+position: relative;
+overflow: hidden;
+}
+.cap-block::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 4px;
+}
+.cap-block.c { background: #EFF7F2; }
+.cap-block.c::before { background: var(–c-color); }
+.cap-block.a { background: #EEF3FA; }
+.cap-block.a::before { background: var(–a-color); }
+.cap-block.p { background: #F5EFF5; }
+.cap-block.p::before { background: var(–p-color); }
+
+.cap-letter {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 52px;
+font-weight: 700;
+line-height: 1;
+opacity: 0.12;
+position: absolute;
+top: 8px; right: 12px;
+}
+.cap-block.c .cap-letter { color: var(–c-color); }
+.cap-block.a .cap-letter { color: var(–a-color); }
+.cap-block.p .cap-letter { color: var(–p-color); }
+
+.cap-tag {
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+padding: 3px 10px;
+border-radius: 20px;
+margin-bottom: 12px;
+display: inline-block;
+}
+.cap-block.c .cap-tag { background: #D1FAE5; color: var(–c-color); }
+.cap-block.a .cap-tag { background: #DBEAFE; color: var(–a-color); }
+.cap-block.p .cap-tag { background: #EDE9FE; color: var(–p-color); }
+
+.cap-block h3 { font-size: 17px; margin-bottom: 8px; }
+.cap-block.c h3 { color: var(–c-color); }
+.cap-block.a h3 { color: var(–a-color); }
+.cap-block.p h3 { color: var(–p-color); }
+.cap-block p { font-size: 13.5px; color: #4B5563; margin: 0; }
+
+/* ─── PRINCIPES ─── */
+.principe-list {
+list-style: none;
+margin: 16px 0;
+}
+.principe-list li {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+padding: 10px 0;
+border-bottom: 1px solid var(–border);
+font-size: 14px;
+line-height: 1.6;
+color: #374151;
+}
+.principe-list li:last-child { border-bottom: none; }
+.principe-icon {
+width: 28px;
+height: 28px;
+background: var(–navy);
+color: var(–gold-light);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 13px;
+flex-shrink: 0;
+margin-top: 1px;
+}
+
+/* ─── PROCESSUS TIMELINE ─── */
+.timeline {
+position: relative;
+padding-left: 32px;
+margin: 20px 0;
+}
+.timeline::before {
+content: ‘’;
+position: absolute;
+left: 10px; top: 0; bottom: 0;
+width: 2px;
+background: linear-gradient(to bottom, var(–gold), var(–navy));
+border-radius: 2px;
+}
+.tl-item {
+position: relative;
+margin-bottom: 22px;
+}
+.tl-item::before {
+content: ‘’;
+position: absolute;
+left: -26px;
+top: 5px;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+background: var(–gold);
+border: 2px solid var(–white);
+box-shadow: 0 0 0 2px var(–gold);
+}
+.tl-item .tl-label {
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–grey);
+margin-bottom: 3px;
+}
+.tl-item p { font-size: 14px; margin: 0; }
+
+/* ─── FICHE PRATIQUE ─── */
+.fiche-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 32px;
+padding-bottom: 20px;
+border-bottom: 2px solid var(–border);
+flex-wrap: wrap;
+gap: 16px;
+}
+.fiche-role {
+display: flex;
+align-items: center;
+gap: 14px;
+}
+.role-icon {
+width: 52px;
+height: 52px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 24px;
+}
+.role-icon.collab { background: #EFF7F2; }
+.role-icon.manager { background: #EEF3FA; }
+.role-title { font-family: ‘Cormorant Garamond’, serif; font-size: 22px; font-weight: 600; }
+.role-sub { font-size: 12px; color: var(–grey); letter-spacing: 0.05em; }
+
+.meta-fields {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin-bottom: 28px;
+}
+.meta-field label {
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–grey);
+display: block;
+margin-bottom: 4px;
+}
+.meta-field .field-box {
+border: 1.5px solid var(–border);
+border-radius: 8px;
+padding: 10px 14px;
+min-height: 38px;
+background: var(–cream);
+font-size: 13.5px;
+color: #9CA3AF;
+font-style: italic;
+}
+
+/* ─── CAP INPUT SECTIONS ─── */
+.cap-section {
+margin-bottom: 24px;
+border-radius: 10px;
+overflow: hidden;
+border: 1.5px solid var(–border);
+}
+.cap-section-header {
+padding: 14px 20px;
+display: flex;
+align-items: center;
+gap: 14px;
+}
+.cap-section.c .cap-section-header { background: #EFF7F2; border-bottom: 1.5px solid #C6E8D5; }
+.cap-section.a .cap-section-header { background: #EEF3FA; border-bottom: 1.5px solid #BFD4F0; }
+.cap-section.p .cap-section-header { background: #F5EFF5; border-bottom: 1.5px solid #DDD0E8; }
+
+.cap-num {
+width: 36px; height: 36px;
+border-radius: 8px;
+display: flex; align-items: center; justify-content: center;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 20px; font-weight: 700;
+flex-shrink: 0;
+}
+.cap-section.c .cap-num { background: var(–c-color); color: white; }
+.cap-section.a .cap-num { background: var(–a-color); color: white; }
+.cap-section.p .cap-num { background: var(–p-color); color: white; }
+
+.cap-section-title h3 { font-size: 16px; margin: 0 0 2px; }
+.cap-section-title span { font-size: 12px; color: var(–grey); }
+.cap-section.c .cap-section-title h3 { color: var(–c-color); }
+.cap-section.a .cap-section-title h3 { color: var(–a-color); }
+.cap-section.p .cap-section-title h3 { color: var(–p-color); }
+
+.cap-section-body {
+padding: 18px 20px;
+background: white;
+}
+.cap-section-body .instruction {
+font-size: 12.5px;
+color: var(–grey);
+font-style: italic;
+margin-bottom: 12px;
+padding: 8px 12px;
+background: var(–grey-light);
+border-radius: 6px;
+border-left: 3px solid var(–border);
+line-height: 1.6;
+}
+.write-area {
+border: 1.5px solid var(–border);
+border-radius: 8px;
+padding: 14px;
+min-height: 90px;
+background: var(–cream);
+font-size: 13px;
+color: #9CA3AF;
+font-style: italic;
+line-height: 1.7;
+}
+.write-area.tall { min-height: 70px; }
+
+/* ─── P ACTIONS ─── */
+.actions-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 12px;
+margin-top: 4px;
+}
+.action-col label {
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–grey);
+display: block;
+margin-bottom: 6px;
+}
+.action-col .write-area { min-height: 80px; font-size: 12.5px; }
+
+/* ─── EMOTION BOX ─── */
+.emotion-box {
+border: 1.5px solid var(–gold);
+background: #FFFBF0;
+border-radius: 10px;
+padding: 16px 18px;
+margin-top: 8px;
+}
+.emotion-box .em-label {
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 8px;
+}
+.emotion-row {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+.emotion-chip {
+border: 1.5px solid var(–border);
+background: white;
+border-radius: 20px;
+padding: 5px 14px;
+font-size: 12.5px;
+color: #6B7280;
+cursor: pointer;
+transition: all .2s;
+}
+.emotion-chip:hover { border-color: var(–gold); color: var(–navy); }
+
+/* ─── SYNTHESIS ─── */
+.synthesis-box {
+border: 1.5px solid var(–navy);
+border-radius: 10px;
+overflow: hidden;
+margin-top: 8px;
+}
+.synthesis-box .syn-header {
+background: var(–navy);
+color: white;
+padding: 12px 18px;
+font-size: 12px;
+font-weight: 500;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+}
+.synthesis-box .write-area {
+border-radius: 0;
+border: none;
+background: white;
+min-height: 70px;
+}
+
+/* ─── FOOTER ─── */
+.fiche-footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding-top: 20px;
+border-top: 1.5px solid var(–border);
+margin-top: 28px;
+flex-wrap: wrap;
+gap: 12px;
+}
+.footer-sig { font-size: 12px; color: var(–grey); }
+.sig-line {
+border: none;
+border-top: 1.5px solid var(–border);
+width: 160px;
+margin-top: 8px;
+}
+.footer-logo {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 18px;
+font-weight: 700;
+color: var(–navy);
+}
+.footer-logo span { color: var(–gold); }
+
+/* ─── TABLE ─── */
+table.principes {
+width: 100%;
+border-collapse: collapse;
+font-size: 13.5px;
+margin: 16px 0;
+}
+table.principes th {
+background: var(–navy);
+color: var(–gold-light);
+padding: 10px 14px;
+text-align: left;
+font-weight: 500;
+font-size: 11px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+}
+table.principes td {
+padding: 10px 14px;
+border-bottom: 1px solid var(–border);
+vertical-align: top;
+line-height: 1.6;
+color: #374151;
+}
+table.principes tr:last-child td { border-bottom: none; }
+table.principes tr:nth-child(even) td { background: var(–cream); }
+
+/* ─── ALERT ─── */
+.alert {
+background: #FFF8E7;
+border: 1.5px solid var(–gold);
+border-radius: 8px;
+padding: 14px 16px;
+font-size: 13.5px;
+color: #78560A;
+display: flex;
+gap: 10px;
+align-items: flex-start;
+margin: 16px 0;
+}
+
+/* print button */
+.print-btn {
+display: flex;
+justify-content: center;
+margin: 10px 0 32px;
+}
+.print-btn button {
+background: var(–navy);
+color: white;
+border: none;
+padding: 12px 32px;
+border-radius: 8px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+font-weight: 500;
+cursor: pointer;
+letter-spacing: 0.04em;
+}
+.print-btn button:hover { background: var(–gold); color: var(–navy); }
+
+@media (max-width: 600px) {
+.cap-grid { grid-template-columns: 1fr; }
+.meta-fields { grid-template-columns: 1fr; }
+.actions-grid { grid-template-columns: 1fr; }
+.card { padding: 24px 20px; }
+}
+</style>
+
+</head>
+<body>
+
+<nav class="nav no-print">
+  <button class="active" onclick="show('outil')">📋 Fiche Outil</button>
+  <button onclick="show('collab')">👤 Collaborateur</button>
+  <button onclick="show('manager')">🎯 Manager</button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE 1 · FICHE OUTIL
+═══════════════════════════════════════════ -->
+
+<div class="page active" id="page-outil">
+
+  <div class="doc-header">
+    <div class="badge">Outil de feed-back A4P Mental</div>
+    <h1>Méthode <span>C·A·P</span></h1>
+    <p class="subtitle">Constat · Analyse · Prise de décision</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Fondement</div>
+    <h2>Pourquoi la méthode CAP ?</h2>
+    <p>Un entretien de feed-back efficace ne s'improvise pas. Il repose sur un cadre structuré qui permet à chaque partie — collaborateur et manager — de préparer, d'exprimer et d'entendre, sans jugement ni confusion entre les faits et les interprétations.</p>
+    <p>La méthode <strong>CAP</strong> offre un langage commun en trois temps pour transformer un échange émotionnel en un moment de co-construction clair, aligné sur les objectifs et porteur de sens.</p>
+
+```
+<div class="cap-grid">
+  <div class="cap-block c">
+    <div class="cap-letter">C</div>
+    <div class="cap-tag">Étape 1</div>
+    <h3>Constat</h3>
+    <p>Ce qui s'est passé, factuellement. Des faits observables, mesurables, indiscutables. Sans interprétation, sans émotion.</p>
+  </div>
+  <div class="cap-block a">
+    <div class="cap-letter">A</div>
+    <div class="cap-tag">Étape 2</div>
+    <h3>Analyse</h3>
+    <p>Le sens donné aux faits : effets observés, lien avec les objectifs et la fiche de mission, point de vue personnel.</p>
+  </div>
+  <div class="cap-block p">
+    <div class="cap-letter">P</div>
+    <div class="cap-tag">Étape 3</div>
+    <h3>Prise de décision</h3>
+    <p>3 actions minimum, réparties sur des horizons court, moyen et long terme, pour consolider ou faire évoluer la situation.</p>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="card">
+    <div class="section-label">Exigences par étape</div>
+    <h2>Ce que chaque étape exige</h2>
+    <table class="principes">
+      <tr>
+        <th>Étape</th>
+        <th>Critère clé</th>
+        <th>Question guide</th>
+        <th>À éviter</th>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--c-color)">C · Constat</strong></td>
+        <td>Factuel et précis</td>
+        <td>« Qu'est-ce que j'ai observé, concret, vérifiable ? »</td>
+        <td>Jugement, interprétation, généralisation ("toujours", "jamais")</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--a-color)">A · Analyse</strong></td>
+        <td>Point de vue + effet + lien mission</td>
+        <td>« Quel effet cela produit-il sur les objectifs et la relation ? »</td>
+        <td>Attaque personnelle, émotion brute non contextualisée</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--p-color)">P · Prise de décision</strong></td>
+        <td>Actions concrètes, temporalisées</td>
+        <td>« Que faisons-nous concrètement, et dans quel délai ? »</td>
+        <td>Bonnes intentions sans échéance, actions unilatérales non partagées</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Déroulé de l'entretien</div>
+    <h2>Comment se déroule la séance ?</h2>
+
+```
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-label">Avant · J-5 minimum</div>
+    <p>Chaque partie remplit <strong>sa propre fiche CAP</strong> de façon indépendante. Pas de concertation préalable.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-label">Ouverture · 5 min</div>
+    <p>Poser le cadre : bienveillance, confidentialité, objectif partagé de co-construire, pas de débat de qui a raison.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-label">Expression du Constat · 10 min</div>
+    <p>Le collaborateur présente son C, puis le manager présente le sien. L'autre écoute sans interrompre.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-label">Partage de l'Analyse · 15 min</div>
+    <p>Chacun expose son A. On cherche les zones de convergence et on nommer les écarts sans les nier.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-label">Co-construction · 15 min</div>
+    <p>On confronte les Prises de décision des deux fiches et on co-construit un plan d'action commun, validé des deux côtés.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-label">Clôture · 5 min</div>
+    <p>Chacun reformule en une phrase ce qu'il retient. Planifier le prochain point de suivi.</p>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="card">
+    <div class="section-label">Posture</div>
+    <h2>Les 5 principes de posture</h2>
+    <ul class="principe-list">
+      <li>
+        <div class="principe-icon">1</div>
+        <span><strong>Séparer les faits des ressentis.</strong> Le constat n'appartient à personne, c'est une réalité partagée. L'analyse est un point de vue, pas une vérité absolue.</span>
+      </li>
+      <li>
+        <div class="principe-icon">2</div>
+        <span><strong>Parler en "je".</strong> "J'ai observé", "Je ressens", "Je propose" — jamais "tu fais toujours", "vous ne faites jamais".</span>
+      </li>
+      <li>
+        <div class="principe-icon">3</div>
+        <span><strong>Accueillir l'émotion sans être gouverné par elle.</strong> L'émotion est une information, pas un argument. Elle signale quelque chose d'important ; elle ne valide pas une position.</span>
+      </li>
+      <li>
+        <div class="principe-icon">4</div>
+        <span><strong>Viser l'alignement, pas la victoire.</strong> L'objectif est de construire une direction commune, pas de prouver que l'autre a tort.</span>
+      </li>
+      <li>
+        <div class="principe-icon">5</div>
+        <span><strong>S'engager sur des actes, pas des intentions.</strong> Une décision sans action programmée est un vœu pieux.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="print-btn no-print">
+    <button onclick="window.print()">🖨 Imprimer / Exporter en PDF</button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE 2 · FICHE COLLABORATEUR
+═══════════════════════════════════════════ -->
+
+<div class="page" id="page-collab">
+
+  <div class="doc-header">
+    <div class="badge">À préparer avant l'entretien</div>
+    <h1>Fiche <span>CAP</span></h1>
+    <p class="subtitle">Fiche du Collaborateur · Confidentielle jusqu'à l'entretien</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="card">
+
+```
+<div class="fiche-header">
+  <div class="fiche-role">
+    <div class="role-icon collab">👤</div>
+    <div>
+      <div class="role-title">Collaborateur</div>
+      <div class="role-sub">Préparer seul · Apporter le jour J</div>
+    </div>
+  </div>
+</div>
+
+<div class="meta-fields">
+  <div class="meta-field">
+    <label>Nom / Prénom</label>
+    <div class="field-box">À compléter</div>
+  </div>
+  <div class="meta-field">
+    <label>Poste / Mission</label>
+    <div class="field-box">À compléter</div>
+  </div>
+  <div class="meta-field">
+    <label>Date de l'entretien</label>
+    <div class="field-box">À compléter</div>
+  </div>
+  <div class="meta-field">
+    <label>Période concernée</label>
+    <div class="field-box">À compléter</div>
+  </div>
+</div>
+
+<div class="alert">
+  <span>💡</span>
+  <span>Prends le temps de remplir chaque section de façon <strong>honnête et précise</strong>. Cette fiche t'appartient. Elle est le point de départ d'un dialogue, pas un document d'évaluation.</span>
+</div>
+
+<!-- C -->
+<div class="cap-section c">
+  <div class="cap-section-header">
+    <div class="cap-num">C</div>
+    <div class="cap-section-title">
+      <h3>Constat · Ce que j'ai observé</h3>
+      <span>Faits concrets et vérifiables uniquement</span>
+    </div>
+  </div>
+  <div class="cap-section-body">
+    <div class="instruction">
+      ➝ Décris des faits précis, datés si possible. Évite tout jugement ou ressenti. Exemple : "Le 12 mars, lors de la réunion d'équipe, j'ai présenté le rapport et aucun retour n'a été formulé dans les 48h."
+    </div>
+    <div class="write-area">
+      Qu'est-ce que j'ai concrètement observé sur cette période ? (situations, faits, chiffres, événements)
+      <br><br>
+      ·
+      <br><br>
+      ·
+      <br><br>
+      ·
+    </div>
+  </div>
+</div>
+
+<!-- A -->
+<div class="cap-section a">
+  <div class="cap-section-header">
+    <div class="cap-num">A</div>
+    <div class="cap-section-title">
+      <h3>Analyse · Ce que j'en pense</h3>
+      <span>Mon point de vue · Effets ressentis · Lien avec mes objectifs</span>
+    </div>
+  </div>
+  <div class="cap-section-body">
+    <div class="instruction">
+      ➝ Exprime ton analyse en "je". Relie les faits à tes objectifs, ta fiche de mission, et les effets que tu as observés sur ta performance ou ta motivation.
+    </div>
+    <div class="write-area">
+      Selon moi, ces constats produisent quels effets sur mon travail, ma motivation, mes objectifs ?
+      <br><br>
+      ·
+      <br><br>
+      ·
+    </div>
+
+    <div style="margin-top: 14px;">
+      <div class="write-area">
+        En quoi cela est-il en lien avec ma fiche de mission et mes objectifs définis ?
+        <br><br>
+        ·
+      </div>
+    </div>
+
+    <div class="emotion-box" style="margin-top:14px;">
+      <div class="em-label">🎯 Dimension émotionnelle · Ce que je ressens (facultatif mais utile)</div>
+      <div class="emotion-row">
+        <span class="emotion-chip">Valorisé·e</span>
+        <span class="emotion-chip">Frustré·e</span>
+        <span class="emotion-chip">Confiant·e</span>
+        <span class="emotion-chip">Incertain·e</span>
+        <span class="emotion-chip">Engagé·e</span>
+        <span class="emotion-chip">Démotivé·e</span>
+        <span class="emotion-chip">Reconnu·e</span>
+        <span class="emotion-chip">Incompris·e</span>
+        <span class="emotion-chip">Autre…</span>
+      </div>
+      <div class="write-area" style="margin-top:10px; min-height:50px;">
+        Précise si besoin :
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P -->
+<div class="cap-section p">
+  <div class="cap-section-header">
+    <div class="cap-num">P</div>
+    <div class="cap-section-title">
+      <h3>Prise de décision · Ce que je propose</h3>
+      <span>3 actions minimum · Court / Moyen / Long terme</span>
+    </div>
+  </div>
+  <div class="cap-section-body">
+    <div class="instruction">
+      ➝ Propose des actions concrètes que tu peux mener toi-même ou co-construire avec ton manager. Chaque action doit être précise et temporalisée.
+    </div>
+    <div class="actions-grid">
+      <div class="action-col">
+        <label>⚡ Court terme · &lt; 1 mois</label>
+        <div class="write-area tall">
+          Action 1 :
+          <br><br>
+          Délai :
+        </div>
+      </div>
+      <div class="action-col">
+        <label>📆 Moyen terme · 1 à 3 mois</label>
+        <div class="write-area tall">
+          Action 2 :
+          <br><br>
+          Délai :
+        </div>
+      </div>
+      <div class="action-col">
+        <label>🔭 Long terme · &gt; 3 mois</label>
+        <div class="write-area tall">
+          Action 3 :
+          <br><br>
+          Délai :
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Synthèse -->
+<div style="margin-top: 24px;">
+  <div class="section-label">Synthèse personnelle</div>
+  <div class="synthesis-box">
+    <div class="syn-header">Ce que je veux absolument que le manager comprenne aujourd'hui</div>
+    <div class="write-area" style="padding: 16px; min-height: 70px;">
+      En une ou deux phrases, le message essentiel que je veux transmettre :
+    </div>
+  </div>
+</div>
+
+<div class="fiche-footer">
+  <div class="footer-sig">
+    Signature du collaborateur
+    <hr class="sig-line">
+  </div>
+  <div class="footer-logo">A4P <span>Mental</span></div>
+</div>
+```
+
+  </div>
+
+  <div class="print-btn no-print">
+    <button onclick="window.print()">🖨 Imprimer / Exporter en PDF</button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE 3 · FICHE MANAGER
+═══════════════════════════════════════════ -->
+
+<div class="page" id="page-manager">
+
+  <div class="doc-header">
+    <div class="badge">À préparer avant l'entretien</div>
+    <h1>Fiche <span>CAP</span></h1>
+    <p class="subtitle">Fiche du Manager · Confidentielle jusqu'à l'entretien</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="card">
+
+```
+<div class="fiche-header">
+  <div class="fiche-role">
+    <div class="role-icon manager">🎯</div>
+    <div>
+      <div class="role-title">Manager</div>
+      <div class="role-sub">Préparer seul · Apporter le jour J</div>
+    </div>
+  </div>
+</div>
+
+<div class="meta-fields">
+  <div class="meta-field">
+    <label>Nom / Prénom du manager</label>
+    <div class="field-box">À compléter</div>
+  </div>
+  <div class="meta-field">
+    <label>Collaborateur concerné</label>
+    <div class="field-box">À compléter</div>
+  </div>
+  <div class="meta-field">
+    <label>Date de l'entretien</label>
+    <div class="field-box">À compléter</div>
+  </div>
+  <div class="meta-field">
+    <label>Période concernée</label>
+    <div class="field-box">À compléter</div>
+  </div>
+</div>
+
+<div class="alert">
+  <span>💡</span>
+  <span>Prépare ta fiche en te concentrant sur les <strong>faits observés</strong>, pas sur l'image globale que tu as du collaborateur. L'objectif est de construire ensemble, pas d'évaluer unilatéralement.</span>
+</div>
+
+<!-- C -->
+<div class="cap-section c">
+  <div class="cap-section-header">
+    <div class="cap-num">C</div>
+    <div class="cap-section-title">
+      <h3>Constat · Ce que j'ai observé</h3>
+      <span>Faits concrets, observables, vérifiables</span>
+    </div>
+  </div>
+  <div class="cap-section-body">
+    <div class="instruction">
+      ➝ Identifie 2 à 4 faits précis sur la période : comportements observables, résultats mesurables, situations spécifiques. Reste factuel — un constat n'est pas une appréciation.
+    </div>
+    <div class="write-area">
+      Faits positifs à noter (résultats atteints, comportements exemplaires, progression) :
+      <br><br>
+      ·
+      <br><br>
+      ·
+    </div>
+    <div class="write-area" style="margin-top:10px;">
+      Faits à améliorer (écarts constatés, situations à risque, points de vigilance) :
+      <br><br>
+      ·
+      <br><br>
+      ·
+    </div>
+  </div>
+</div>
+
+<!-- A -->
+<div class="cap-section a">
+  <div class="cap-section-header">
+    <div class="cap-num">A</div>
+    <div class="cap-section-title">
+      <h3>Analyse · Mon point de vue de manager</h3>
+      <span>Effets sur l'équipe · Lien objectifs · Lecture managériale</span>
+    </div>
+  </div>
+  <div class="cap-section-body">
+    <div class="instruction">
+      ➝ Relie les constats aux objectifs définis et à la fiche de mission du collaborateur. Identifie les effets sur l'équipe, la dynamique collective et les résultats attendus.
+    </div>
+    <div class="write-area">
+      Quels effets ces constats ont-ils sur les objectifs individuels et collectifs ?
+      <br><br>
+      ·
+      <br><br>
+      ·
+    </div>
+    <div class="write-area" style="margin-top:10px;">
+      En quoi cela est-il en lien (ou en écart) avec la fiche de mission et les engagements du collaborateur ?
+      <br><br>
+      ·
+    </div>
+    <div class="write-area" style="margin-top:10px;">
+      Ma lecture de la situation : quelles hypothèses j'ai sur les causes ? (charge, compétence, motivation, contexte…)
+      <br><br>
+      ·
+    </div>
+
+    <div class="emotion-box" style="margin-top:14px;">
+      <div class="em-label">🎯 Dimension émotionnelle · Ce que je ressens en tant que manager (facultatif mais utile)</div>
+      <div class="emotion-row">
+        <span class="emotion-chip">Confiant·e</span>
+        <span class="emotion-chip">Préoccupé·e</span>
+        <span class="emotion-chip">Satisfait·e</span>
+        <span class="emotion-chip">Déçu·e</span>
+        <span class="emotion-chip">Enthousiaste</span>
+        <span class="emotion-chip">Incertain·e</span>
+        <span class="emotion-chip">Fier/Fière</span>
+        <span class="emotion-chip">Autre…</span>
+      </div>
+      <div class="write-area" style="margin-top:10px; min-height:50px;">
+        Précise si besoin :
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P -->
+<div class="cap-section p">
+  <div class="cap-section-header">
+    <div class="cap-num">P</div>
+    <div class="cap-section-title">
+      <h3>Prise de décision · Ce que je propose</h3>
+      <span>3 actions minimum · Soutien managérial + Attentes claires</span>
+    </div>
+  </div>
+  <div class="cap-section-body">
+    <div class="instruction">
+      ➝ Définis des actions précises que tu t'engages à mener (soutien, ressources, clarification, formation, feedback régulier) ET les attentes que tu formules vis-à-vis du collaborateur.
+    </div>
+    <div class="actions-grid">
+      <div class="action-col">
+        <label>⚡ Court terme · &lt; 1 mois</label>
+        <div class="write-area tall">
+          Action manager :
+          <br><br>
+          Attente collaborateur :
+          <br><br>
+          Délai :
+        </div>
+      </div>
+      <div class="action-col">
+        <label>📆 Moyen terme · 1 à 3 mois</label>
+        <div class="write-area tall">
+          Action manager :
+          <br><br>
+          Attente collaborateur :
+          <br><br>
+          Délai :
+        </div>
+      </div>
+      <div class="action-col">
+        <label>🔭 Long terme · &gt; 3 mois</label>
+        <div class="write-area tall">
+          Action manager :
+          <br><br>
+          Attente collaborateur :
+          <br><br>
+          Délai :
+        </div>
+      </div>
+    </div>
+    <div class="write-area" style="margin-top:12px;">
+      Indicateur de succès : comment saurons-nous que les choses ont évolué positivement ?
+      <br><br>
+      ·
+    </div>
+  </div>
+</div>
+
+<!-- Synthèse -->
+<div style="margin-top: 24px;">
+  <div class="section-label">Message essentiel</div>
+  <div class="synthesis-box">
+    <div class="syn-header">Ce que je veux absolument que le collaborateur comprenne aujourd'hui</div>
+    <div class="write-area" style="padding: 16px; min-height: 70px;">
+      En une ou deux phrases, le message essentiel que je veux transmettre :
+    </div>
+  </div>
+</div>
+
+<!-- Point de suivi -->
+<div style="margin-top:20px;">
+  <div class="section-label">Suivi</div>
+  <div class="meta-fields">
+    <div class="meta-field">
+      <label>Date du prochain point de suivi</label>
+      <div class="field-box">À fixer en fin d'entretien</div>
+    </div>
+    <div class="meta-field">
+      <label>Format du suivi</label>
+      <div class="field-box">À définir ensemble</div>
+    </div>
+  </div>
+</div>
+
+<div class="fiche-footer">
+  <div class="footer-sig">
+    Signature du manager
+    <hr class="sig-line">
+  </div>
+  <div class="footer-logo">A4P <span>Mental</span></div>
+</div>
+```
+
+  </div>
+
+  <div class="print-btn no-print">
+    <button onclick="window.print()">🖨 Imprimer / Exporter en PDF</button>
+  </div>
+
+</div>
+
+<script>
+  function show(tab) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + tab).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
